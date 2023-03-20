@@ -24,7 +24,7 @@ def deconvolve_hofmeister(img, psf, iterations = 25, tolerance = .1, mask = None
     ----------
     img : 'numpy 2d array'
         An image.
-    psf : `~numpy.ndarray`, optional
+    psf : `~numpy.ndarray
         The point spread function. 
     iterations: `int`
         Maximum number of iterations
@@ -144,7 +144,7 @@ def deconvolve_richardson_lucy(img, psf, iterations=25, use_gpu = True, pad = Tr
     ----------
     img : 'numpy 2d array'
         An image.
-    psf : `~numpy.ndarray`, optional
+    psf : `~numpy.ndarray`
         The point spread function. 
     iterations: `int`
         Number of iterations in the Richardson-Lucy algorithm
