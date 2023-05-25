@@ -161,10 +161,9 @@ function deconvolve_hofmeister, img_in, psf_in, iterations = iterations, mask = 
   
   ;before the psf deconvolution, we have to pad the image and psf with zeros to break the periodic boundary conditions for the convolution in the fourier domain
   if pad then begin
-    pad_img_psf, img, psf, large_psf = large_psf, value = !values.f_nan
+    pad_img_psf, img, psf, large_psf = large_psf, value = 0
     pad_mask = where(finite(img) eq 0)
     img[pad_mask] = 0
-    psf[pad_mask] = 0
   endif
 
   img_decon = img
