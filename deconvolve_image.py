@@ -76,15 +76,20 @@ def deconvolve_hofmeister(img, psf, iterations = 25, tolerance = .1, mask = None
 
     #before the psf deconvolution, we have to pad the image and psf with zeros to break the periodic boundary conditions for the convolution in the fourier domain            
     if pad == True:
-        img, psf = pad_img_psf(img, psf, large_psf = large_psf, constant_values = 0)
+        img, psf = pad_img_psf(img, psf, large_psf = large_psf, constant_values = np.nan)
         pad_mask = np.isnan(img)  #the pad mask is required in the next loop - at each iteration, the padding has to be restored.
         img[pad_mask] = 0.
+        psf[np.isnan(psf)] = 0.
+
                
     # if we have a gpu, put it to the gpu
     if use_gpu:
         img = cupy.array(img)
         psf = cupy.array(psf)    
         pad_mask = cupy.array(pad_mask)
+        tolerance = cupy.array([tolerance]) 
+    else:
+        tolerance = [tolerance]
     
     #derive the fourier transform of the psf
     psf = np.roll(np.roll(psf, psf.shape[0]//2, axis=0),
