@@ -13,12 +13,12 @@ import sys
 import cupy
 
 
-def deconvolve_hofmeister(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True):
+def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True):
     """
     Deconvolve an image with the point spread function
 
     Perform image deconvolution on an image with the instrument
-    point spread function using the my algorithm published in ...
+    point spread function using the bid algorithm published in Hofmeister et al. (2024): https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
 
     Parameters
     ----------
