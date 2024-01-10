@@ -95,7 +95,7 @@ end
 
 
 
-function deconvolve_image, img_in, psf_in, iterations = iterations, mask = mask,  large_psf = large_psf, pad = pad, estimate_background = estimate_background, tolerance = tolerance
+function deconvolve_imag, img_in, psf_in, iterations = iterations, mask = mask,  large_psf = large_psf, pad = pad, estimate_background = estimate_background, tolerance = tolerance
 ;  
 ;  Deconvolve an image with the point spread function
 ;
