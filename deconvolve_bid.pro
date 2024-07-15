@@ -1,3 +1,8 @@
+;@ Stefan Hofmeister
+;Perform image deconvolution on an image with the instrument
+;point spread function using the bid algorithm published in 
+;Hofmeister et al. (2024), The Basic Iterative Deconvolution: A Fast Instrumental Point-Spread Function Deconvolution Method That Corrects for Light That Is Scattered Out of the Field of View of a Detector, Solar Physics, Volume 299, Issue 6, article id.77
+;https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
 
 function pad, img, pad_left, pad_right, pad_top, pad_bottom, value = value
   if not keyword_set(value) then value = 0
@@ -100,7 +105,9 @@ function deconvolve_imag, img_in, psf_in, iterations = iterations, mask = mask, 
 ;  Deconvolve an image with the point spread function
 ;
 ;  Perform image deconvolution on an image with the instrument
-;  point spread function using the my algorithm published in ...
+;  point spread function using the bid algorithm published in 
+;  Hofmeister et al. (2024), The Basic Iterative Deconvolution: A Fast Instrumental Point-Spread Function Deconvolution Method That Corrects for Light That Is Scattered Out of the Field of View of a Detector, Solar Physics, Volume 299, Issue 6, article id.77
+;  https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
 ;
 ;  Parameters
 ;  ----------
