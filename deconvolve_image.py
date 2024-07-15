@@ -18,7 +18,9 @@ def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_g
     Deconvolve an image with the point spread function
 
     Perform image deconvolution on an image with the instrument
-    point spread function using the bid algorithm published in Hofmeister et al. (2024): https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
+    point spread function using the bid algorithm published in 
+    Hofmeister et al. (2024), The Basic Iterative Deconvolution: A Fast Instrumental Point-Spread Function Deconvolution Method That Corrects for Light That Is Scattered Out of the Field of View of a Detector, Solar Physics, Volume 299, Issue 6, article id.77
+    https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
 
     Parameters
     ----------
