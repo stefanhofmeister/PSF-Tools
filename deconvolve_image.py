@@ -1,4 +1,4 @@
-"""© Stefan Hofmeister. 
+"""© Stefan Hofmeister
 """
 
 import numpy as np
