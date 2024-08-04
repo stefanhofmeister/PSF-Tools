@@ -8,7 +8,7 @@ import sys
 import cupy
 
 
-def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True):
+def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True, constrain_positive = False):
     """
     Deconvolve an image with the point spread function
 
@@ -38,6 +38,8 @@ def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_g
         If true, increase the size of both the psf and the image by a factor of two, and pad the psf and image accordingly with zeros. As this is a fourier-based method, this breaks the symmetric boundary conditions involved in the fourier transform.
     large_psf: True/False
         Usually, the PSF has the same dimension as the image, restricting scattered light to half of the image size. If set to true, the PSF given to the deconvolution has to be double the image size (that allows scattering over the full image range). The image will be padded with zeros to match the size of the full psf, and deconvolution is done over the full psf.
+    constrain_positive: False/True
+        Constrain the deconvolution to positive result intensities. If on, it mitigates small ringing artifacts. But usually, this is not needed. Negative intensities are more informative, as they tell that something goes wrong (image calibration artifacts, sligthly inaccurate PSF, etc.)
 
     Returns
     -------
@@ -110,7 +112,7 @@ def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_g
         deviations = img_decon_con - img
         #and adjust the approximated deconvolved image accordingly
         img_decon -=  k * deviations
-        # img_decon[img_decon < 0] = 0
+        if constrain_positive == True: img_decon[img_decon < 0] = 0
         #if the deconvolved image has converged, end the iterations
         dev =  np.max(np.abs(img_decon - img_decon_last))
         if dev <= tolerance[0]: break
