@@ -100,7 +100,7 @@ end
 
 
 
-function deconvolve_imag, img_in, psf_in, iterations = iterations, mask = mask,  large_psf = large_psf, pad = pad, estimate_background = estimate_background, tolerance = tolerance
+function deconvolve_image, img_in, psf_in, iterations = iterations, mask = mask,  large_psf = large_psf, pad = pad, estimate_background = estimate_background, tolerance = tolerance, constrain_positive = constrain_positive
 ;  
 ;  Deconvolve an image with the point spread function
 ;
@@ -129,8 +129,9 @@ function deconvolve_imag, img_in, psf_in, iterations = iterations, mask = mask, 
 ;  pad: 1/0
 ;         If true, increase the size of both the psf and the image by a factor of two, and pad the psf and image accordingly with zeros. As this is a fourier-based method, this breaks the symmetric boundary conditions involved in the fourier transform.
 ;  large_psf: 1/0
-;         Usually, the PSF has the same dimension as the image, restricting scattered light to half of the image size. If set to true, the PSF given to the deconvolution has to be double the image size (that allows scattering over the full image range). The image will be padded with zeros to match the size of the full psf, and deconvolution is done over the full psf.
-;
+;         Usually, the PSF has the same dimension as the image, restricting scattered light to half of the image size. If set to true, the PSF given to the deconvolution has to be double the image size (that allows scattering over the full image range). The image will be padded with zeros to match the size of the full psf, and deconvolution is done over the full psf;
+;  constrain_positive: 1/0
+;         Constrain the deconvolution to positive intensities. Can be used to mitigate ringing artifacts. But usually not needed; it is often worth to allow negative intensities, as these tell that something goes wrong (image calibration, slightly inaccurate PSF, etc).
 ;  Returns
 ;  -------
 ;  2d array
@@ -183,7 +184,7 @@ function deconvolve_imag, img_in, psf_in, iterations = iterations, mask = mask, 
     deviations = img_decon_con - img
     ;and adjust the approximated deconvolved image accordingly
     img_decon -=  k * deviations
-;    img_decon[where(img_decon lt 0)] = 0
+    if constrain_positive eq 1 then img_decon[where(img_decon lt 0)] = 0
     ;if the deconvolved image has converged, end the iterations
     dev =  max(abs(img_decon - img_decon_last))
     if dev lt tolerance then break
