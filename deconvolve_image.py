@@ -8,7 +8,7 @@ import sys
 import cupy
 
 
-def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True, constrain_positive = False):
+def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_gpu = True, large_psf = False, pad = True, estimate_background = True, constrain_positive = True):
     """
     Deconvolve an image with the point spread function
 
@@ -38,8 +38,8 @@ def deconvolve_bid(img, psf, iterations = 25, tolerance = .1, mask = None, use_g
         If true, increase the size of both the psf and the image by a factor of two, and pad the psf and image accordingly with zeros. As this is a fourier-based method, this breaks the symmetric boundary conditions involved in the fourier transform.
     large_psf: True/False
         Usually, the PSF has the same dimension as the image, restricting scattered light to half of the image size. If set to true, the PSF given to the deconvolution has to be double the image size (that allows scattering over the full image range). The image will be padded with zeros to match the size of the full psf, and deconvolution is done over the full psf.
-    constrain_positive: False/True
-        Constrain the deconvolution to positive result intensities. If on, it mitigates small ringing artifacts. But usually, this is not needed. Negative intensities are more informative, as they tell that something goes wrong (image calibration artifacts, sligthly inaccurate PSF, etc.)
+    constrain_positive: True/False
+        Constrain the deconvolution to positive result intensities. If on, it mitigates small ringing artifacts. If true, allow negative intensities in the reconstructions. Negative intensities are informative, as they can tell that something goes wrong (image calibration artifacts, sligthly inaccurate PSF, ringing, etc.)
 
     Returns
     -------
