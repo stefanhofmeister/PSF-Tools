@@ -131,7 +131,7 @@ function deconvolve_image, img_in, psf_in, iterations = iterations, mask = mask,
 ;  large_psf: 1/0
 ;         Usually, the PSF has the same dimension as the image, restricting scattered light to half of the image size. If set to true, the PSF given to the deconvolution has to be double the image size (that allows scattering over the full image range). The image will be padded with zeros to match the size of the full psf, and deconvolution is done over the full psf;
 ;  constrain_positive: 1/0
-;         Constrain the deconvolution to positive intensities. Can be used to mitigate ringing artifacts. But usually not needed; it is often worth to allow negative intensities, as these tell that something goes wrong (image calibration, slightly inaccurate PSF, etc).
+;         Constrain the deconvolution to positive intensities. Can be used to mitigate ringing artifacts. However, it is often worth to allow negative intensities, as these tell that something goes wrong (image calibration, slightly inaccurate PSF, ringing etc). Default is 1 (constrain_positive = True).
 ;  Returns
 ;  -------
 ;  2d array
@@ -143,6 +143,7 @@ function deconvolve_image, img_in, psf_in, iterations = iterations, mask = mask,
   if n_elements(pad) eq 0 then pad = 1
   if n_elements(estimate_background) eq 0 then estimate_background = 1
   if not keyword_set(tolerance) then tolerance = .1
+  if not keyword_set(constrain_positive) then constrain_positive = 1
 
   ;At the moment, the mask option only works if the shape of the selected region is smaller than 0.5 * the shape of the image  
   ;this factor determines the speed of convergence, and should be set between [0.1, 1.0]
