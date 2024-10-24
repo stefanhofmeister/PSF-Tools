@@ -4,6 +4,12 @@
 ;Hofmeister et al. (2024), The Basic Iterative Deconvolution: A Fast Instrumental Point-Spread Function Deconvolution Method That Corrects for Light That Is Scattered Out of the Field of View of a Detector, Solar Physics, Volume 299, Issue 6, article id.77
 ;https://ui.adsabs.harvard.edu/abs/2023arXiv231211784H/abstract
 
+function ndim, img
+  return, (size(img))[0]
+
+function dim, img
+  return, (size(img))[1:2]
+
 function pad, img, pad_left, pad_right, pad_top, pad_bottom, value = value
   if not keyword_set(value) then value = 0
   im_size = dim(img)
